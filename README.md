@@ -1,3 +1,8 @@
+# MER
+
+![MER](https://drive.google.com/uc?id=140NbQBDRa4_SUPS8302sxAbDiFrQ2EyN)
+
+
 # Esquema de Base de Datos: Note Management
 
 Este archivo SQL define el esquema de la base de datos para el sistema de gestión de notas. Incluye la creación de tablas, relaciones y atributos necesarios para manejar usuarios, estudiantes, administradores, matrículas, materias, actividades, notas, comentarios, notificaciones y bitácoras.
