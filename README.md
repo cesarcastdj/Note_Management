@@ -100,4 +100,4 @@ Este archivo SQL define el esquema de la base de datos para el sistema de gesti√
 
 ---
 
-**Firma:** <Cesar-Dev/>
+> **Cesar-Dev**
