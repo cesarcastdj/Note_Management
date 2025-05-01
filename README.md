@@ -1,108 +1,212 @@
 # MER
 
-![MER](https://drive.google.com/uc?id=140NbQBDRa4_SUPS8302sxAbDiFrQ2EyN)
+![MER](https://drive.google.com/uc?id=1nhga-dmGZRW1vEaOBH4G7TpRpjBRTz2D)
 
+# Documentación del Esquema de Base de Datos
 
-# Esquema de Base de Datos: Note Management
+## Descripción General
 
-Este archivo SQL define el esquema de la base de datos para el sistema de gestión de notas. Incluye la creación de tablas, relaciones y atributos necesarios para manejar usuarios, estudiantes, administradores, matrículas, materias, actividades, notas, comentarios, notificaciones y bitácoras.
-
-## Tablas y Descripción
-
-### 1. **Usuarios**
-- Almacena la información básica de todos los usuarios (administradores y estudiantes).
-- **Atributos:**
-  - `id_usuario`: Identificador único del usuario.
-  - `nombre`: Nombre del usuario.
-  - `apellido`: Apellido del usuario.
-  - `correo`: Correo electrónico único.
-  - `contraseña`: Contraseña encriptada.
-  - `rol`: Rol del usuario (`admin` o `estudiante`).
-  - `estado`: Indica si el usuario está activo o inactivo (eliminación lógica).
-  - `ultima_conexion`: Fecha y hora de la última conexión.
-
-### 2. **Estudiantes**
-- Relaciona a los estudiantes con la tabla `Usuarios`.
-- **Atributos:**
-  - `id_estudiante`: Identificador único del estudiante.
-  - `id_usuario`: Relación con la tabla `Usuarios`.
-
-### 3. **Administradores**
-- Relaciona al administrador con la tabla `Usuarios`.
-- **Atributos:**
-  - `id_admin`: Identificador único del administrador.
-  - `id_usuario`: Relación con la tabla `Usuarios`.
-
-### 4. **Matrícula**
-- Registra la información de matrícula de los estudiantes.
-- **Atributos:**
-  - `id_matricula`: Identificador único de la matrícula.
-  - `id_estudiante`: Relación con la tabla `Estudiantes`.
-  - `periodo_academico`: Periodo académico del estudiante (por ejemplo, "2025-1").
-  - `seccion`: Sección del estudiante (por ejemplo, "A", "B").
-  - `estado`: Indica si la matrícula está activa o inactiva (eliminación lógica).
-
-### 5. **Materias**
-- Almacena las materias disponibles en el sistema.
-- **Atributos:**
-  - `id_materia`: Identificador único de la materia.
-  - `nombre_materia`: Nombre de la materia.
-  - `descripcion`: Descripción de la materia.
-
-### 6. **Relación Matrícula-Materias**
-- Relaciona las matrículas con las materias en las que están inscritos los estudiantes.
-- **Atributos:**
-  - `id_matricula`: Relación con la tabla `Matrícula`.
-  - `id_materia`: Relación con la tabla `Materias`.
-
-### 7. **Actividades**
-- Almacena las actividades creadas por el administrador.
-- **Atributos:**
-  - `id_actividad`: Identificador único de la actividad.
-  - `nombre_actividad`: Nombre de la actividad.
-  - `descripcion`: Descripción de la actividad.
-  - `fecha_creacion`: Fecha de creación de la actividad.
-
-### 8. **Notas**
-- Registra las notas obtenidas por los estudiantes en las actividades.
-- **Atributos:**
-  - `id_nota`: Identificador único de la nota.
-  - `id_actividad`: Relación con la tabla `Actividades`.
-  - `id_estudiante`: Relación con la tabla `Estudiantes`.
-  - `nota_obtenida`: Nota obtenida en la actividad.
-
-### 9. **Comentarios**
-- Permite la comunicación entre usuarios (estudiantes y administradores).
-- **Atributos:**
-  - `id_comentario`: Identificador único del comentario.
-  - `id_usuario`: Relación con la tabla `Usuarios`.
-  - `mensaje`: Contenido del comentario.
-  - `fecha_hora`: Fecha y hora del comentario.
-
-### 10. **Notificaciones**
-- Almacena las notificaciones enviadas a los usuarios.
-- **Atributos:**
-  - `id_notificacion`: Identificador único de la notificación.
-  - `id_usuario`: Relación con la tabla `Usuarios`.
-  - `mensaje`: Contenido de la notificación.
-  - `fecha_hora`: Fecha y hora de la notificación.
-  - `estado`: Indica si la notificación ha sido leída o no.
-
-### 11. **Bitácora**
-- Registra las acciones realizadas por los usuarios en el sistema.
-- **Atributos:**
-  - `id_accion`: Identificador único de la acción.
-  - `id_usuario`: Relación con la tabla `Usuarios`.
-  - `accion_realizada`: Descripción de la acción.
-  - `fecha_hora`: Fecha y hora de la acción.
+Este archivo SQL define el esquema de la base de datos para el sistema escolar. Contiene las tablas, relaciones y restricciones necesarias para gestionar las funcionalidades del sistema.
 
 ---
 
-## Relación entre Tablas
-- **Usuarios** es la tabla central que conecta con `Estudiantes`, `Administradores`, `Comentarios`, `Notificaciones` y `Bitácora`.
-- **Matrícula** se relaciona con `Estudiantes` y `Materias` mediante una tabla intermedia (`Matricula_Materias`).
-- **Notas** conecta `Estudiantes` con `Actividades`.
+## Estructura del Esquema
+
+### 1. Información Geográfica
+
+- **`estados`**: Almacena los estados con su código ISO.
+- **`ciudades`**: Relaciona las ciudades con los estados.
+- **`municipios`**: Relaciona los municipios con los estados.
+- **`parroquias`**: Relaciona las parroquias con los municipios.
+- **`direccion`**: Almacena direcciones específicas, relacionando ciudades y parroquias.
+
+### 2. Gestión de Usuarios
+
+- **`usuarios`**: Almacena información de los usuarios, incluyendo su nivel, dirección y rol.
+- **`nivel`**: Define los niveles jerárquicos de los administradores.
+- **`usuario_administradores`**: Relaciona los usuarios con sus niveles jerárquicos.
+
+### 3. Gestión Académica
+
+- **`materias`**: Almacena las materias disponibles.
+- **`seccion`**: Define las secciones o grupos.
+- **`periodo`**: Define los periodos académicos.
+- **`matricula`**: Relaciona estudiantes con periodos y secciones.
+- **`matricula_materias`**: Relaciona matrículas con materias.
+
+### 4. Funcionalidades Adicionales
+
+- **`actividades`**: Almacena actividades académicas.
+- **`notas`**: Registra las notas obtenidas por los estudiantes en las actividades.
+- **`comentarios`**: Permite a los usuarios dejar comentarios.
+- **`notificaciones`**: Almacena notificaciones enviadas a los usuarios.
+- **`bitacora`**: Registra las acciones realizadas por los usuarios.
 
 ---
 
-> **Cesar-Dev**
+## Relaciones Clave
+
+1. **Usuarios y Direcciones:**
+   - Cada usuario está relacionado con una dirección específica.
+2. **Usuarios y Niveles:**
+   - Los administradores tienen niveles jerárquicos definidos en la tabla `nivel`.
+3. **Estudiantes y Matrículas:**
+   - Los estudiantes están relacionados con periodos, secciones y materias a través de la tabla `matricula`.
+4. **Actividades y Notas:**
+   - Las notas están vinculadas a actividades específicas realizadas por los estudiantes.
+
+---
+
+## Restricciones y Consideraciones
+
+- **Integridad Referencial:**
+  - Todas las relaciones están definidas con claves foráneas para garantizar la consistencia de los datos.
+- **Eliminación Lógica:**
+  - Algunas tablas, como `usuarios` y `matricula`, utilizan un campo `estado` para manejar eliminaciones lógicas.
+
+---
+
+## Ejemplo de Consultas
+
+### Consulta para Obtener las Notas de un Estudiante:
+
+```sql
+SELECT
+    u.primer_nombre,
+    u.apellido,
+    a.nombre_actividad,
+    n.nota_obtenida
+FROM
+    notas n
+JOIN
+    actividades a ON n.id_actividad = a.id_actividad
+JOIN
+    estudiantes e ON n.id_estudiante = e.id_estudiante
+JOIN
+    usuarios u ON e.id_usuario = u.id_usuario
+WHERE
+    u.id_usuario = 1;
+```
+
+### Consulta para Ver las Materias de una Matrícula:
+
+```sql
+SELECT
+    m.nombre_materia
+FROM
+    matricula_materias mm
+JOIN
+    materias m ON mm.id_materia = m.id_materia
+WHERE
+    mm.id_matricula = 1;
+```
+
+---
+
+## Ejemplo de Datos Ficticios
+
+### Tabla: Usuarios
+
+| id_usuario | primer_nombre | segundo_nombre | primer_apellido | segundo_apellido | correo                | rol        | estado | ultima_conexion     |
+| ---------- | ------------- | -------------- | --------------- | ---------------- | --------------------- | ---------- | ------ | ------------------- |
+| 1          | Juan          | Carlos         | Pérez           | Gómez            | juan.perez@gmail.com  | estudiante | 1      | 2025-04-30 10:00:00 |
+| 2          | María         | Fernanda       | López           | Rodríguez        | maria.lopez@gmail.com | admin      | 1      | 2025-04-29 15:30:00 |
+
+### Tabla: Materias
+
+| id_materia | nombre_materia | descripcion                    |
+| ---------- | -------------- | ------------------------------ |
+| 1          | Matemáticas    | Cálculo diferencial e integral |
+| 2          | Historia       | Historia universal moderna     |
+
+### Tabla: Matrícula
+
+| id_matricula | id_estudiante | id_periodo | id_seccion | estado |
+| ------------ | ------------- | ---------- | ---------- | ------ |
+| 1            | 1             | 1          | A          | 1      |
+| 2            | 1             | 2          | B          | 1      |
+
+### Tabla: Notas
+
+| id_nota | id_actividad | id_estudiante | nota_obtenida |
+| ------- | ------------ | ------------- | ------------- |
+| 1       | 1            | 1             | 18.5          |
+| 2       | 2            | 1             | 20.0          |
+
+### Tabla: Actividades
+
+| id_actividad | nombre_actividad | descripcion                     | fecha_creacion |
+| ------------ | ---------------- | ------------------------------- | -------------- |
+| 1            | Examen Parcial   | Evaluación del primer parcial   | 2025-04-15     |
+| 2            | Proyecto Final   | Presentación del proyecto final | 2025-05-01     |
+
+### Tabla: Bitácora
+
+| id_accion | id_usuario | accion_realizada          | fecha_hora          |
+| --------- | ---------- | ------------------------- | ------------------- |
+| 1         | 1          | Inicio de sesión          | 2025-04-30 10:05:00 |
+| 2         | 2          | Creación de nueva materia | 2025-04-29 16:00:00 |
+
+### Tabla: Nivel
+
+| id_nivel | tipo_nivel | descripcion              |
+| -------- | ---------- | ------------------------ |
+| 1        | super      | Administrador principal  |
+| 2        | normal     | Administrador secundario |
+
+### Tabla: Dirección
+
+| id_direccion | calle            | numero | id_ciudad | id_parroquia |
+| ------------ | ---------------- | ------ | --------- | ------------ |
+| 1            | Av. Principal    | 123    | 1         | 1            |
+| 2            | Calle Secundaria | 456    | 2         | 2            |
+
+### Tabla: Estados
+
+| id_estado | nombre_estado | codigo_iso |
+| --------- | ------------- | ---------- |
+| 1         | Amazonas      | VE-X       |
+| 2         | Anzoátegui    | VE-B       |
+| 3         | Apure         | VE-C       |
+| 4         | Aragua        | VE-D       |
+| 5         | Barinas       | VE-E       |
+
+### Tabla: Municipios
+
+| id_municipio | id_estado | nombre_municipio |
+| ------------ | --------- | ---------------- |
+| 1            | 1         | Alto Orinoco     |
+| 2            | 1         | Atabapo          |
+| 3            | 2         | Anaco            |
+| 4            | 2         | Aragua           |
+| 5            | 3         | Achaguas         |
+
+### Tabla: Parroquias
+
+| id_parroquia | id_municipio | nombre_parroquia     |
+| ------------ | ------------ | -------------------- |
+| 1            | 1            | Huachamacare Acanaña |
+| 2            | 1            | Marawaka Toky        |
+| 3            | 2            | Ucata Laja Lisa      |
+| 4            | 3            | San Joaquín          |
+| 5            | 3            | El Yagual            |
+
+### Tabla: Ciudades
+
+| id_ciudad | nombre_ciudad         | es_capital | id_estado |
+| --------- | --------------------- | ---------- | --------- |
+| 1         | Puerto Ayacucho       | TRUE       | 1         |
+| 2         | Maroa                 | FALSE      | 1         |
+| 3         | Barcelona             | TRUE       | 2         |
+| 4         | Puerto La Cruz        | FALSE      | 2         |
+| 5         | San Fernando de Apure | TRUE       | 3         |
+
+### Tabla: Dirección
+
+| id_direccion | calle          | numero | id_ciudad | id_parroquia |
+| ------------ | -------------- | ------ | --------- | ------------ |
+| 1            | Av. Bolívar    | 101    | 1         | 1            |
+| 2            | Calle Sucre    | 202    | 2         | 2            |
+| 3            | Av. Principal  | 303    | 3         | 3            |
+| 4            | Calle Miranda  | 404    | 4         | 4            |
+| 5            | Av. Libertador | 505    | 5         | 5            |
