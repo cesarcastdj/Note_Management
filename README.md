@@ -1,6 +1,6 @@
 # MER
 
-![MER](https://drive.google.com/uc?id=1nhga-dmGZRW1vEaOBH4G7TpRpjBRTz2D)
+![MER](https://drive.google.com/file/d/12wlpZdQVpPgiNPotr6InbZI0m5nZWWtg)
 
 # Documentación del Esquema de Base de Datos
 
