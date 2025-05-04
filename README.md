@@ -14,7 +14,7 @@ Este archivo SQL define el esquema de la base de datos para el sistema escolar. 
 
 ### 1. Información Geográfica
 
-- **`estados`**: Almacena los estados con su código ISO.
+- **`estados`**: Almacena los estados con su código ISO-3166-2.
 - **`ciudades`**: Relaciona las ciudades con los estados.
 - **`municipios`**: Relaciona los municipios con los estados.
 - **`parroquias`**: Relaciona las parroquias con los municipios.
@@ -33,6 +33,8 @@ Este archivo SQL define el esquema de la base de datos para el sistema escolar. 
 - **`periodo`**: Define los periodos académicos.
 - **`matricula`**: Relaciona estudiantes con periodos y secciones.
 - **`matricula_materias`**: Relaciona matrículas con materias.
+- **`cursos`**: Almacena la información de los cursos disponibles.
+- **`matricula_curso`**: Relaciona los cursos con las matrículas de estudiantes.
 
 ### 4. Funcionalidades Adicionales
 
@@ -46,29 +48,25 @@ Este archivo SQL define el esquema de la base de datos para el sistema escolar. 
 
 ## Relaciones Clave
 
-1. **Usuarios y Direcciones:**
-   - Cada usuario está relacionado con una dirección específica.
-2. **Usuarios y Niveles:**
-   - Los administradores tienen niveles jerárquicos definidos en la tabla `nivel`.
-3. **Estudiantes y Matrículas:**
-   - Los estudiantes están relacionados con periodos, secciones y materias a través de la tabla `matricula`.
-4. **Actividades y Notas:**
-   - Las notas están vinculadas a actividades específicas realizadas por los estudiantes.
+1. **Usuarios y Direcciones**: Cada usuario está relacionado con una dirección específica.
+2. **Usuarios y Niveles**: Los administradores tienen niveles jerárquicos definidos en la tabla `nivel`.
+3. **Estudiantes y Matrículas**: Los estudiantes están relacionados con periodos, secciones y materias a través de la tabla `matricula`.
+4. **Cursos y Matrículas**: Se ha añadido la relación entre cursos y estudiantes mediante `matricula_curso`.
+5. **Actividades y Notas**: Las notas están vinculadas a actividades específicas realizadas por los estudiantes.
 
 ---
 
 ## Restricciones y Consideraciones
 
-- **Integridad Referencial:**
-  - Todas las relaciones están definidas con claves foráneas para garantizar la consistencia de los datos.
-- **Eliminación Lógica:**
-  - Algunas tablas, como `usuarios` y `matricula`, utilizan un campo `estado` para manejar eliminaciones lógicas.
+- **Integridad Referencial**: Todas las relaciones están definidas con claves foráneas para garantizar la consistencia de los datos.
+- **Eliminación Lógica**: Algunas tablas, como `usuarios` y `matricula`, utilizan un campo `estado` para manejar eliminaciones lógicas.
+- **Mejoras en Índices**: Se han agregado índices en las tablas clave para optimizar consultas.
 
 ---
 
-## Ejemplo de Consultas
+## Ejemplo de Consultas SQL
 
-### Consulta para Obtener las Notas de un Estudiante:
+### Obtener las notas de un estudiante:
 
 ```sql
 SELECT
@@ -86,11 +84,7 @@ JOIN
     usuarios u ON e.id_usuario = u.id_usuario
 WHERE
     u.id_usuario = 1;
-```
 
-### Consulta para Ver las Materias de una Matrícula:
-
-```sql
 SELECT
     m.nombre_materia
 FROM
@@ -99,9 +93,7 @@ JOIN
     materias m ON mm.id_materia = m.id_materia
 WHERE
     mm.id_matricula = 1;
-```
 
----
 
 ## Ejemplo de Datos Ficticios
 
@@ -210,3 +202,9 @@ WHERE
 | 3            | Av. Principal  | 303    | 3         | 3            |
 | 4            | Calle Miranda  | 404    | 4         | 4            |
 | 5            | Av. Libertador | 505    | 5         | 5            |
+
+### Tabla: Cursos
+
+| id_curso | nombre_curso   | descripcion              |
+| -------- | -------------- | ------------------------ |
+| 1        | Programación   | Desarrollo de software   |
