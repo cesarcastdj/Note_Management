@@ -9,6 +9,32 @@
 
 Este archivo SQL define el esquema de la base de datos para el sistema escolar. Contiene las tablas, relaciones y restricciones necesarias para gestionar las funcionalidades del sistema.
 
+El esquema SQL define una base de datos relacional para gestionar un sistema escolar. Su diseño se basa en claves primarias y foráneas para asegurar la integridad referencial y optimizar la organización de la información académica y administrativa.
+
+Gestión Geográfica: Registra la ubicación de los estudiantes y usuarios con tablas para estados, ciudades, municipios, parroquias y direccion.
+
+Gestión de Usuarios: Define usuarios con niveles jerárquicos (nivel) y administra administradores en usuario_administradores.
+
+Estructura Académica: Organiza materias (materias), secciones (seccion), y períodos (periodo) para estructurar la inscripción de los estudiantes (matricula).
+
+Registro de Actividades y Notas: actividades almacena tareas y evaluaciones, mientras que notas gestiona calificaciones.
+
+Seguimiento y Comunicación: Incluye comentarios, notificaciones, y bitacora para registro de interacciones y eventos.
+
+Módulo de Cursos: cursos y matricula_curso permiten la inscripción en programas educativos adicionales.
+
+## El diseño está optimizado para:
+
+Organizar la información de usuarios, ubicación y jerarquía administrativa.
+
+Facilitar la inscripción y gestión académica, desde materias hasta periodos escolares.
+
+Registrar evaluaciones, notas y actividades, manteniendo el rendimiento de los estudiantes.
+
+Mejorar la comunicación mediante notificaciones y comentarios.
+
+Mantener seguridad y auditoría mediante bitácoras y control de accesos.
+
 ---
 
 ## Estructura del Esquema
